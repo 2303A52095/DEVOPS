@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Food Ordering App</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+header {
+    background: #ff4d4d;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.container {
+    display: flex;
+}
+
+/* Food List */
+.food-list {
+    width: 70%;
+    padding: 20px;
+}
+
+.food {
+    background: white;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.food button {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Cart */
+.cart {
+    width: 30%;
+    background: #fff;
+    padding: 20px;
+    border-left: 2px solid #ddd;
+}
+
+.cart h2 {
+    margin-top: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.place-order {
+    width: 100%;
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #222;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header>🍕 Food Ordering Application</header>
+
+<div class="container">
+
+    <!-- Food Items -->
+    <div class="food-list">
+        <h2>Menu</h2>
+
+        <div class="food">
+            <span>Pizza 🍕 - ₹250</span>
+            <button onclick="addToCart('Pizza',250)">Add</button>
+        </div>
+
+        <div class="food">
+            <span>Burger 🍔 - ₹150</span>
+            <button onclick="addToCart('Burger',150)">Add</button>
+        </div>
+
+        <div class="food">
+            <span>Pasta 🍝 - ₹200</span>
+            <button onclick="addToCart('Pasta',200)">Add</button>
+        </div>
+
+        <div class="food">
+            <span>Fries 🍟 - ₹100</span>
+            <button onclick="addToCart('Fries',100)">Add</button>
+        </div>
+
+        <div class="food">
+            <span>Cold Drink 🥤 - ₹80</span>
+            <button onclick="addToCart('Cold Drink',80)">Add</button>
+        </div>
+    </div>
+
+    <!-- Cart -->
+    <div class="cart">
+        <h2>🛒 Cart</h2>
+        <div id="cartItems"></div>
+        <hr>
+        <h3>Total: ₹<span id="total">0</span></h3>
+        <button class="place-order" onclick="placeOrder()">Place Order</button>
+    </div>
+
+</div>
+
+<footer>© 2026 Food App</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+function displayCart() {
+    let cartDiv = document.getElementById("cartItems");
+    let total = 0;
+    cartDiv.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        cartDiv.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name}</span>
+                <span>₹${item.price}</span>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+function placeOrder() {
+    if (cart.length === 0) {
+        alert("Cart is empty!");
+        return;
+    }
+
+    alert("✅ Order placed successfully!");
+    cart = [];
+    localStorage.removeItem("cart");
+    displayCart();
+}
+
+displayCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+node_modules/
+tmp_push_DEVOPS/
+DEVOPS-20260122/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.DS_Store
+.vscode/
+dist/
+build/
+coverage/
+/.idea/
+*.log
+# Lockfiles
+
+
+# Node modules
+# (Previously ignored; removed to allow tracking when needed)
+
+# SQLite DB
+# (Previously ignored; removed to allow tracking when needed)
+
+
+# Temporary push folders
+tmp_push_DEVOPS/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+
+# Logs
+npm-debug.log
+logs/
+*.log
+
+# Build outputs
+dist/
+build/
+
+# VS Code
+.vscode/
