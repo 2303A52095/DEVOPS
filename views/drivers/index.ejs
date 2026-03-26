@@ -1,0 +1,84 @@
+<%- include('../partials/layout-start', { title }) %>
+<section class="content-grid">
+  <div class="panel">
+    <div class="panel-header">
+      <div>
+        <h3>Driver Directory</h3>
+        <p>Manage availability, vehicles, and fleet members.</p>
+      </div>
+      <a href="/drivers/new" class="btn btn-primary">Add Driver</a>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Driver</th>
+            <th>Vehicle</th>
+            <th>License</th>
+            <th>Availability</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% drivers.forEach((driver) => { %>
+            <tr>
+              <td class="user-cell">
+                <img src="<%= driver.user.profilePicture %>" alt="Driver">
+                <div>
+                  <strong><%= driver.user.name %></strong>
+                  <span><%= driver.user.email %></span>
+                </div>
+              </td>
+              <td><%= driver.vehicleType %> / <%= driver.vehicleNumber %></td>
+              <td><%= driver.licenseNumber %></td>
+              <td><span class="status-pill status-<%= driver.availability %>"><%= driver.availability %></span></td>
+              <td><%= driver.user.lastLogin ? new Date(driver.user.lastLogin).toLocaleString() : 'Never' %></td>
+              <td>
+                <form action="/drivers/<%= driver._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this driver?')">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div>
+        <h3>Assign Ride</h3>
+        <p>Manually dispatch a pending ride to a driver.</p>
+      </div>
+    </div>
+    <% if (drivers.length) { %>
+      <form action="/drivers/<%= drivers[0]?._id || '' %>/assign" method="POST" class="form-grid" id="assignRideForm">
+        <div class="form-group">
+          <label for="driverAssignId">Driver</label>
+          <select id="driverAssignId" name="driverAssignId" required data-driver-select>
+            <% drivers.forEach((driver) => { %>
+              <option value="<%= driver._id %>"><%= driver.user.name %> - <%= driver.vehicleType %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rideId">Ride ID</label>
+          <input id="rideId" name="rideId" type="text" placeholder="Paste ride ID" required>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status">
+            <option value="Accepted">Accepted</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Assign Ride</button>
+      </form>
+    <% } else { %>
+      <p class="empty-cell">Add a driver before assigning rides.</p>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/layout-end') %>

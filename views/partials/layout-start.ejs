@@ -1,0 +1,8 @@
+<%- include('head', { title }) %>
+<div class="app-shell <%= currentUser ? '' : 'auth-shell' %>">
+  <%- include('sidebar') %>
+  <main class="main-content">
+    <% if (currentUser) { %>
+      <%- include('navbar', { title }) %>
+    <% } %>
+    <%- include('flash') %>

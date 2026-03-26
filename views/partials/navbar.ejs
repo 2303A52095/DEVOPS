@@ -1,0 +1,25 @@
+<header class="topbar">
+  <button class="menu-toggle" type="button" data-sidebar-toggle>
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="topbar-title">
+    <h2><%= title %></h2>
+    <p>Operational visibility for bookings, drivers, and users.</p>
+  </div>
+
+  <% if (currentUser) { %>
+    <div class="topbar-actions">
+      <div class="user-chip">
+        <img src="<%= currentUser.profilePicture %>" alt="Profile">
+        <div>
+          <strong><%= currentUser.name %></strong>
+          <span><%= currentUser.role %></span>
+        </div>
+      </div>
+      <form action="/logout" method="POST">
+        <button type="submit" class="btn btn-dark">Logout</button>
+      </form>
+    </div>
+  <% } %>
+</header>
